@@ -3,6 +3,8 @@ Development Status :: 2 - Pre-Alpha
 #Development Status :: 3 - Alpha
 #Development Status :: 4 - Beta
 #Development Status :: 5 - Production/Stable
+Environment :: Plugins
+Framework :: Sphinx
 Intended Audience :: Developers
 License :: OSI Approved :: Apache Software License
 Operating System :: OS Independent
@@ -10,3 +12,8 @@ Programming Language :: Python :: 2
 Programming Language :: Python :: 2.7
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3.4
+Topic :: Documentation
+Topic :: Documentation :: Sphinx
+Topic :: Software Development :: Documentation
+Topic :: Text Processing :: Filters
+Topic :: Text Processing :: Markup
