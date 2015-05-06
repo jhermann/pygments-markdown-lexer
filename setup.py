@@ -36,6 +36,11 @@
 name = 'pygments-markdown-lexer'
 package_name = 'pygments_markdown_lexer'
 
+entry_points = {
+    'pygments.lexers': ['markdown = pygments_markdown_lexer.lexer.MarkdownLexer'],
+}
+
+
 # ~~~ BEGIN springerle/py-generic-project ~~~
 # Stdlib imports
 import os
@@ -157,6 +162,7 @@ def _build_metadata(): # pylint: disable=too-many-locals, too-many-branches
             with open(classifiers_txt, encoding='utf-8') as handle:
                 classifiers = [i.strip() for i in handle if i.strip() and not i.startswith('#')]
             break
+    entry_points.setdefault('console_scripts', []).extend(console_scripts)
 
     metadata.update(dict(
         name = name,
@@ -172,9 +178,7 @@ def _build_metadata(): # pylint: disable=too-many-locals, too-many-branches
         cmdclass = dict(
             test = PyTest,
         ),
-        entry_points = dict(
-            console_scripts = console_scripts,
-        ),
+        entry_points = entry_points,
     ))
     return metadata
 
@@ -182,4 +186,8 @@ def _build_metadata(): # pylint: disable=too-many-locals, too-many-branches
 project = _build_metadata()
 __all__ = ['project', 'project_root', 'package_name', 'srcfile']
 if __name__ == '__main__':
-    setup(**project)
+    if '--metadata' == sys.argv[1]:
+        import json
+        json.dump(project, sys.stdout, default=repr, indent=4, sort_keys=True)
+    else:
+        setup(**project)
