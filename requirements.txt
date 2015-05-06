@@ -1,3 +1,5 @@
 #
 # Install requirements
 #
+
+Pygments>=2.0
