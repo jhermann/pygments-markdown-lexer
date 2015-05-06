@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-# pylint: disable=bad-continuation
-""" Markdown lexer for Pygments.
-
-    See `Write your own lexer`_.
-
-    .. _`Write your own lexer`: http://pygments.org/docs/lexerdevelopment/
+# *- coding: utf-8 -*-
+# pylint: disable=wildcard-import, missing-docstring, no-self-use, bad-continuation
+# pylint: disable=invalid-name, redefined-outer-name, too-few-public-methods
+""" Test «pygments_markdown_lexer.lexer».
 """
 # Copyright ©  2015 Jürgen Hermann <jh@web.de>
 #
@@ -21,21 +18,9 @@
 # limitations under the License.
 from __future__ import absolute_import, unicode_literals, print_function
 
-from pygments.lexer import RegexLexer
-from pygments.token import *
-
-from ._compat import encode_filename
+from pygments_markdown_lexer import lexer
 
 
-class MarkdownLexer(RegexLexer):
-    """A Markdown lexer for Pygments."""
-    name = 'Markdown'
-    aliases = ['md', 'markdown']
-    filenames = ['*.md', '*.markdown']
-
-    tokens = {
-        encode_filename('root'): [
-            (r'^# .*\n', Generic.Heading),
-            (r'^#{2,5} .*\n', Generic.SubHeading),
-        ]
-    }
+def test_lexer_can_be_created():
+    # Looks silly, but *does* test the metaclass magic
+    lexer.MarkdownLexer()
