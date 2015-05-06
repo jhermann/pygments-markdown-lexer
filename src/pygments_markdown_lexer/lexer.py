@@ -22,7 +22,7 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
 from pygments.lexer import RegexLexer
-from pygments.token import *
+from pygments.token import *  # pylint: disable=wildcard-import, unused-wildcard-import
 
 from ._compat import encode_filename
 
