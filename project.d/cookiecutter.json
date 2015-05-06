@@ -1,0 +1,16 @@
+{
+    "email": "jh@web.de",
+    "features": "travis flake8",
+    "full_name": "J\u00fcrgen Hermann",
+    "github_url": "https://github.com/jhermann/pygments-markdown-lexer",
+    "github_username": "jhermann",
+    "keywords": "hosted.by.github pygmenst markdown lexer highlighting",
+    "license": "Apache 2.0",
+    "pkg_name": "pygments_markdown_lexer",
+    "project_name": "Pygments Markdown Lexer",
+    "repo_name": "pygments-markdown-lexer",
+    "short_description": "A Markdown lexer for Pygments to highlight Markdown code snippets",
+    "url": "https://github.com/jhermann/pygments-markdown-lexer",
+    "version": "0.1.0",
+    "year": "2015"
+}
