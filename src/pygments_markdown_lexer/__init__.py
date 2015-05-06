@@ -26,6 +26,6 @@ __version__         = "0.1.0"
 __license__         = "Apache 2.0"
 __author__          = "Jürgen Hermann"
 __author_email__    = "jh@web.de"
-__keywords__        = "hosted.by.github pygmenst markdown lexer highlighting"
+__keywords__        = "hosted.by.github pygments markdown lexer highlighting"
 
 __all__ = []
