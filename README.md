@@ -12,11 +12,6 @@ A Markdown lexer for Pygments to highlight Markdown code snippets.
  [![Downloads](https://img.shields.io/pypi/dw/pygments-markdown-lexer.svg)](https://pypi.python.org/pypi/pygments-markdown-lexer/)
 
 
-## Overview
-
-…
-
-
 ## Installation
 
 *Pygments Markdown Lexer* can be installed via ``pip install pygments-markdown-lexer`` as usual,
@@ -34,7 +29,19 @@ See [Contributing](#contributing) on how to create a full development environmen
 
 ## Usage
 
-…
+Once installed, usually into a virtualenv, the ``pygments_markdown_lexer`` package
+is instantly visible to *Pygments*, since it defines a *Setuptools* entry point
+for registration.
+
+In order for *Sphinx* to load and recognize the custom lexer, add the
+``pygments_markdown_lexer`` package name to the ``extensions`` list in ``conf.py``.
+Then use it in a ``code-block`` as if it were a built-in, like this:
+
+    .. code-block:: md
+
+        Some *Markdown* markup.
+
+Both ``md`` and ``markdown`` are valid to specify the language for the code block.
 
 
 ## Contributing
