@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-“Pygments Markdown Lexer“
+“Pygments Markdown Lexer”
 =========================
 
 A `Markdown <https://daringfireball.net/projects/markdown/syntax>`_
