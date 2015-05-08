@@ -19,8 +19,8 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
 import pygments
-import pytest
-from pygments.token import *
+#import pytest
+from pygments.token import *  # pylint: disable=unused-wildcard-import
 
 from pygments_markdown_lexer import lexer
 
