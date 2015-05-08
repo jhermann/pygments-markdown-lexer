@@ -37,7 +37,7 @@ name = 'pygments-markdown-lexer'
 package_name = 'pygments_markdown_lexer'
 
 entry_points = {
-    'pygments.lexers': ['markdown = pygments_markdown_lexer.lexer.MarkdownLexer'],
+    'pygments.lexers': ['markdown = pygments_markdown_lexer.lexer:MarkdownLexer'],
 }
 
 
