@@ -2,9 +2,10 @@
 # pylint: disable=bad-continuation
 """ Markdown lexer for Pygments.
 
-    See `Write your own lexer`_.
+    See `Write your own lexer`_ and `Builtin Tokens`_.
 
     .. _`Write your own lexer`: http://pygments.org/docs/lexerdevelopment/
+    .. _`Builtin Tokens`: http://pygments.org/docs/tokens/
 """
 # Copyright ©  2015 Jürgen Hermann <jh@web.de>
 #
@@ -31,11 +32,18 @@ class MarkdownLexer(RegexLexer):
     """A Markdown lexer for Pygments."""
     name = 'Markdown'
     aliases = ['md', 'markdown']
-    filenames = ['*.md', '*.markdown']
+    filenames = ['*.md', '*.mkd', '*.markdown']
 
     tokens = {
         encode_filename('root'): [
-            (r'^# .*\n', Generic.Heading),
-            (r'^#{2,5} .*\n', Generic.SubHeading),
+            # headings (hashmarks)
+            (r'^# .+\n', Generic.Heading),
+            (r'^#{2,5} .+\n', Generic.SubHeading),
+
+            # emphasis (underscores)
+            (r'(?<!_)_[^_ \t].*?(?<!\\|_| |\t)_(?!_)', Generic.Emph),
+
+            # plain text
+            (r'[-. A-Za-z0-9]+', Text),
         ]
     }
