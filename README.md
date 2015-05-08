@@ -1,6 +1,7 @@
 # pygments-markdown-lexer
 
-A Markdown lexer for Pygments to highlight Markdown code snippets.
+A [Markdown](https://daringfireball.net/projects/markdown/syntax) lexer
+for [Pygments](http://pygments.org/) to highlight Markdown code snippets.
 
  [![Travis CI](https://api.travis-ci.org/jhermann/pygments-markdown-lexer.svg)](https://travis-ci.org/jhermann/pygments-markdown-lexer)
  [![Coveralls](https://img.shields.io/coveralls/jhermann/pygments-markdown-lexer.svg)](https://coveralls.io/r/jhermann/pygments-markdown-lexer)
@@ -84,4 +85,4 @@ See [CONTRIBUTING](https://github.com/jhermann/pygments-markdown-lexer/blob/mast
 
 ## Acknowledgements
 
-…
+* Based on the GtkSourceView 3.0 language definition by Jean-Philippe Fleury <contact@jpfleury.net>.
