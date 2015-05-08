@@ -40,7 +40,9 @@ Then use it in a ``code-block`` as if it were a built-in, like this:
 
     .. code-block:: md
 
-        Some *Markdown* markup.
+        Enables _Pygments_ to handle
+        [Markdown](https://daringfireball.net/projects/markdown/syntax)
+        in *Sphinx* **code blocks**.
 
 Both ``md`` and ``markdown`` are valid to specify the language for the code block.
 
