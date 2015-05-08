@@ -70,7 +70,6 @@ See [CONTRIBUTING](https://github.com/jhermann/pygments-markdown-lexer/blob/mast
 
 * [Sphinx](http://sphinx-doc.org/)
 * [Pygments](http://pygments.org/)
-
 * [Cookiecutter](http://cookiecutter.readthedocs.org/en/latest/)
 * [PyInvoke](http://www.pyinvoke.org/)
 * [pytest](http://pytest.org/latest/contents.html)
