@@ -25,12 +25,20 @@ from pygments.token import *  # pylint: disable=unused-wildcard-import
 from pygments_markdown_lexer import lexer
 
 
+#############################################################################
+### Helpers
+
 def check(*expected):
     text = ''.join(i[1] for i in expected)
     md_lexer = lexer.MarkdownLexer()
+    md_lexer.add_filter('raiseonerror')
+    md_lexer.add_filter('tokenmerge')
     result = list(pygments.lex(text, md_lexer))
     assert result == list(expected)
 
+
+#############################################################################
+### Basics
 
 def test_lexer_has_proper_name():
     md_lexer = lexer.MarkdownLexer()
@@ -40,32 +48,72 @@ def test_lexer_has_proper_name():
 
 
 def test_multiple_lines_of_text():
+    check((Text, 'Lorem\nipsum dolor\nsit amet.\n'),)
+
+
+#############################################################################
+### Headings
+
+def test_headings_using_hashmarks():
+    check((Generic.Heading, '# Header level 1\n'),)
+    check((Generic.Heading, '# Header level 1 #\n'),)
+    for i in range(2, 6):
+        check((Generic.SubHeading, '{hashes} H{n}\n'.format(n=i, hashes='#' * i)),)
+        check((Generic.SubHeading, '{hashes} H{n} {hashes}\n'.format(n=i, hashes='#' * i)),)
+
+
+def test_headings_using_underlining():
     check(
-        (Text, 'Lorem'),
-        (Text, '\n'),
-        (Text, 'ipsum dolor'),
-        (Text, '\n'),
-        (Text, 'sit amet.'),
+        (Generic.Heading, '======\nHeader\n======\n'),
+        (Text, 'text\n'),
+    )
+    check(
+        (Generic.SubHeading, '------\nSub Header\n------\n'),
+        (Text, 'text\n'),
+    )
+    check((Text, '---- text ----\n'),)
+    check((Text, '----\ntext ----\n'),)
+
+
+#############################################################################
+### Inline
+
+def test_escape_by_backslash():
+    check(
+        (String.Escape, r'\*'),
+        (Text, 'bold'),
+        (String.Escape, r'\*'),
+        (Text, ' '),
+        (String.Escape, r'\`'),
+        (Text, 'code'),
+        (String.Escape, r'\`'),
         (Text, '\n'),
     )
 
 
-def test_headings_using_hashmarks():
-    check((Generic.Heading, '# Header level 1\n'),)
-    for i in range(2, 6):
-        check((Generic.SubHeading, '{hashes} H{n}\n'.format(n=i, hashes='#' * i)),)
+def test_html_entities():
+    check(
+        (Text, 'Copyright symbol '),
+        (lexer.Markdown.HtmlEntity, '&copy;'),
+        (Text, 'but AT&T vs. AT'),
+        (lexer.Markdown.HtmlEntity, '&amp;'),
+        (Text, 'T and 4 < 5.\n'),
+    )
+    check(
+        (Text, 'a '),
+        (String.Escape, r'\&'),
+        (Text, ' z\n'),
+    )
 
 
 def test_emphasis_with_underscores():
     check(
         (Text, 'Lorem '),
         (Generic.Emph, '_ipsum dolor_'),
-        (Text, ' sit amet.'),
-        (Text, '\n'),
+        (Text, ' sit amet.\n'),
     )
     check(
         (Text, 'emphasized text '),
         (Generic.Emph, r'_containing an underscore (\_)_'),
-        (Text, '.'),
-        (Text, '\n'),
+        (Text, '.\n'),
     )
