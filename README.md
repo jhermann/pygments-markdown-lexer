@@ -71,6 +71,8 @@ See [CONTRIBUTING](https://github.com/jhermann/pygments-markdown-lexer/blob/mast
 * [Markdown Syntax](https://daringfireball.net/projects/markdown/syntax#p)
 * [Pygments Lexer](http://pygments.org/docs/lexerdevelopment/)
 * [Pygments Tokens](http://pygments.org/docs/tokens/)
+* [Pygments Styles](http://pygments.org/docs/styles/)
+  * [Style Gallery](https://help.farbox.com/pygments.html)
 * [Python Regex](https://docs.python.org/2/library/re.html)
 
 **Tools**
