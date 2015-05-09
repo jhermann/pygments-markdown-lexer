@@ -66,6 +66,13 @@ See [CONTRIBUTING](https://github.com/jhermann/pygments-markdown-lexer/blob/mast
 
 ## References
 
+**Specs**
+
+* [Markdown Syntax](https://daringfireball.net/projects/markdown/syntax#p)
+* [Pygments Lexer](http://pygments.org/docs/lexerdevelopment/)
+* [Pygments Tokens](http://pygments.org/docs/tokens/)
+* [Python Regex](https://docs.python.org/2/library/re.html)
+
 **Tools**
 
 * [Sphinx](http://sphinx-doc.org/)
