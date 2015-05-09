@@ -93,4 +93,4 @@ See [CONTRIBUTING](https://github.com/jhermann/pygments-markdown-lexer/blob/mast
 
 ## Acknowledgements
 
-* Based on the GtkSourceView 3.0 language definition by Jean-Philippe Fleury <contact@jpfleury.net>.
+* Based in part on the ``pygments.lexers.markup`` lexers (*Georg Brandl* and others, BSD-licensed).
