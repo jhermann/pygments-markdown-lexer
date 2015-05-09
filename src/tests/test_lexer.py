@@ -57,9 +57,11 @@ def test_multiple_lines_of_text():
 def test_headings_using_hashmarks():
     check((Markdown.Heading, '# Header level 1\n'),)
     check((Markdown.Heading, '# Header level 1 #\n'),)
+    check((Text, ' # not a header\n'),)
     for i in range(2, 6):
         check((Markdown.SubHeading, '{hashes} H{n}\n'.format(n=i, hashes='#' * i)),)
         check((Markdown.SubHeading, '{hashes} H{n} {hashes}\n'.format(n=i, hashes='#' * i)),)
+        check((Text, ' {hashes} not a header\n'.format(n=i, hashes='#' * i)),)
 
 
 def test_headings_using_underlining():
@@ -73,6 +75,8 @@ def test_headings_using_underlining():
     )
     check((Text, '---- text ----\n'),)
     check((Text, '----\ntext ----\n'),)
+    check((Text, 'text\n ----\n'),)
+    check((Text, ' text\n----\n'),)
 
 
 #############################################################################

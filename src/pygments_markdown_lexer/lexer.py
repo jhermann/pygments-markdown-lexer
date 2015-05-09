@@ -62,21 +62,21 @@ class MarkdownLexer(RegexLexer):
     tokens = {
         state('root'): [
             # Headings (hashmarks)
-            (r'# .+( #)?\n', Markdown.Heading),
-            (r'#{2,6} .+( #{2,6})?\n', Markdown.SubHeading),
+            (r'^# .+( #)?\n', Markdown.Heading),
+            (r'^#{2,6} .+( #{2,6})?\n', Markdown.SubHeading),
 
             # Headings (underlined)
-            (r'(={3,}\n)?.{3,}\n={3,}\n', Markdown.Heading),
-            (r'(-{3,}\n)?.{3,}\n-{3,}\n', Markdown.SubHeading),
+            (r'^(={3,}\n)?\S.{2,}\n={3,}\n', Markdown.Heading),
+            (r'^(-{3,}\n)?\S.{2,}\n-{3,}\n', Markdown.SubHeading),
 
             # HTML one-liners
-            (r'<(?P<tag>[-:a-zA-Z0-9]+)( [^>]+)>.+</(?P=tag)>\n', Markdown.HtmlSingle),
+            (r'^<(?P<tag>[-:a-zA-Z0-9]+)( [^>]+)>.+</(?P=tag)>\n', Markdown.HtmlSingle),
 
             # HTML blocks
-            (r'<[^/>][^>]*>\n', Markdown.HtmlBlock, state('htmlblock')),
+            (r'^<[^/>][^>]*>\n', Markdown.HtmlBlock, state('htmlblock')),
 
             # GitHub style code blocks
-            (r'(```)(.*?)(\n)',
+            (r'^(```)(.*?)(\n)',
              bygroups(Name.Builtin, Name.Namespace, Markdown.CodeBlock),
              state('codeblock')),
 
@@ -122,11 +122,11 @@ class MarkdownLexer(RegexLexer):
             (r'(?<!\\)``?' + end_string_suffix, String.Backtick, state('#pop')),
         ],
         state('htmlblock'): [  # TODO: delegate to HTML lexer
-            (r'</[^>]+>\n', Markdown.HtmlBlock, state('#pop')),
+            (r'^</[^>]+>\n', Markdown.HtmlBlock, state('#pop')),
             (r'.*\n', Markdown.HtmlBlock),  # slurp boring text
         ],
         state('codeblock'): [
-            (r'```\n', Name.Builtin, state('#pop')),
+            (r'^```\n', Name.Builtin, state('#pop')),
             (r'[^`]+', Markdown.CodeBlock),  # slurp boring text
             (r'`', Markdown.CodeBlock),  # allow single backticks
         ],
