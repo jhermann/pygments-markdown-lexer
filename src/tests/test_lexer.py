@@ -55,23 +55,45 @@ def test_multiple_lines_of_text():
 ### Headings
 
 def test_headings_using_hashmarks():
-    check((Markdown.Heading, '# Header level 1\n'),)
-    check((Markdown.Heading, '# Header level 1 #\n'),)
+    check(
+        (Markdown.Markup, '# '),
+        (Markdown.Heading, 'Header level 1'),
+        (Text, '\n'),
+    )
+    check(
+        (Markdown.Markup, '# '),
+        (Markdown.Heading, 'Header level 1'),
+        (Markdown.Markup, ' #'),
+        (Text, '\n'),
+    )
     check((Text, ' # not a header\n'),)
     for i in range(2, 6):
-        check((Markdown.SubHeading, '{hashes} H{n}\n'.format(n=i, hashes='#' * i)),)
-        check((Markdown.SubHeading, '{hashes} H{n} {hashes}\n'.format(n=i, hashes='#' * i)),)
+        check(
+            (Markdown.Markup, '#' * i + ' '),
+            (Markdown.SubHeading, 'H{n}'.format(n=i)),
+            (Text, '\n'),
+        )
+        check(
+            (Markdown.Markup, '#' * i + ' '),
+            (Markdown.SubHeading, 'H{n}'.format(n=i)),
+            (Markdown.Markup, ' ' + '#' * i),
+            (Text, '\n'),
+        )
         check((Text, ' {hashes} not a header\n'.format(n=i, hashes='#' * i)),)
 
 
 def test_headings_using_underlining():
     check(
-        (Markdown.Heading, '======\nHeader\n======\n'),
-        (Text, 'text\n'),
+        (Markdown.Markup, '======\n'),
+        (Markdown.SubHeading, 'Header\n'),
+        (Markdown.Markup, '======'),
+        (Text, '\ntext\n'),
     )
     check(
-        (Markdown.SubHeading, '------\nSub Header\n------\n'),
-        (Text, 'text\n'),
+        (Markdown.Markup, '------\n'),
+        (Markdown.SubHeading, 'Sub Header\n'),
+        (Markdown.Markup, '------'),
+        (Text, '\ntext\n'),
     )
     check((Text, '---- text ----\n'),)
     check((Text, '----\ntext ----\n'),)
@@ -124,17 +146,23 @@ def test_emphasis_with_underscore_and_asterisk():
     for emph, ch in data:
         check(
             (Text, 'Lorem '),
-            (emph, '{ch}ipsum dolor{ch}'.format(ch=ch)),
+            (Markdown.Markup, ch),
+            (emph, 'ipsum dolor'),
+            (Markdown.Markup, ch),
             (Text, ' sit amet\n'),
         )
         check(
             (Text, 'emphasized text '),
-            (emph, r'{ch}containing escaped markup (\{one_ch}){ch}'.format(ch=ch, one_ch=ch[0])),
+            (Markdown.Markup, ch),
+            (emph, r'containing escaped markup (\{one_ch})'.format(one_ch=ch[0])),
+            (Markdown.Markup, ch),
             (Text, '.\n'),
         )
         check(
             (Text, 'em'),
-            (emph, '{ch}bedd{ch}'.format(ch=ch)),
+            (Markdown.Markup, ch),
+            (emph, 'bedd'),
+            (Markdown.Markup, ch),
             (Text, 'ed in words.\n'),
         )
         check(

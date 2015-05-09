@@ -32,6 +32,7 @@ from ._compat import encode_filename as state
 
 class Markdown(object):
     """Symbolic names for Markdown tokens."""
+    Markup = Keyword
     Heading = Generic.Heading
     SubHeading = Generic.Heading
     CodeBlock = Comment.Preproc
@@ -62,12 +63,16 @@ class MarkdownLexer(RegexLexer):
     tokens = {
         state('root'): [
             # Headings (hashmarks)
-            (r'^# .+( #)?\n', Markdown.Heading),
-            (r'^#{2,6} .+( #{2,6})?\n', Markdown.SubHeading),
+            (r'^(# )(.+?)( #)?(\n)',
+             bygroups(Markdown.Markup, Markdown.Heading, Markdown.Markup, Text)),
+            (r'^(#{2,6} )(.+?)( #{2,6})?(\n)',
+             bygroups(Markdown.Markup, Markdown.SubHeading, Markdown.Markup, Text)),
 
             # Headings (underlined)
-            (r'^(={3,}\n)?\S.{2,}\n={3,}\n', Markdown.Heading),
-            (r'^(-{3,}\n)?\S.{2,}\n-{3,}\n', Markdown.SubHeading),
+            (r'^(={3,}\n)?(\S.{2,}\n)(={3,})(\n)',
+             bygroups(Markdown.Markup, Markdown.Heading, Markdown.Markup, Text)),
+            (r'^(-{3,}\n)?(\S.{2,}\n)(-{3,})(\n)',
+             bygroups(Markdown.Markup, Markdown.Heading, Markdown.Markup, Text)),
 
             # HTML one-liners
             (r'^<(?P<tag>[-:a-zA-Z0-9]+)( [^>]+)>.+</(?P=tag)>\n', Markdown.HtmlSingle),
@@ -77,7 +82,7 @@ class MarkdownLexer(RegexLexer):
 
             # GitHub style code blocks
             (r'^(```)(.*?)(\n)',
-             bygroups(Name.Builtin, Name.Namespace, Markdown.CodeBlock),
+             bygroups(Markdown.Markup, Name.Namespace, Markdown.CodeBlock),
              state('codeblock')),
 
             include(state('inline')),
@@ -92,15 +97,19 @@ class MarkdownLexer(RegexLexer):
             (r'&', Text),
 
             # Inline code
-            (r'``?', String.Backtick, state('literal')),
+            (r'``?', Markdown.Markup, state('literal')),
 
             # Emphasis
             (r'_?_[ \n]', Text),  # whitespace escape
             (r'\*?\*[ \n]', Text),  # whitespace escape
-            (r'\*\*.+?(?<![ \\])\*\*', Generic.Strong),
-            (r'__.+?(?<![ \\])__', Generic.Strong),
-            (r'\*.+?(?<![ \\])\*', Generic.Emph),
-            (r'_.+?(?<![ \\])_', Generic.Emph),
+            (r'(\*\*)(.+?)((?<![ \\])\*\*)',
+             bygroups(Markdown.Markup, Generic.Strong, Markdown.Markup)),
+            (r'(__)(.+?)((?<![ \\])__)',
+             bygroups(Markdown.Markup, Generic.Strong, Markdown.Markup)),
+            (r'(\*)(.+?)((?<![ \\])\*)',
+             bygroups(Markdown.Markup, Generic.Emph, Markdown.Markup)),
+            (r'(_)(.+?)((?<![ \\])_)',
+             bygroups(Markdown.Markup, Generic.Emph, Markdown.Markup)),
 
             #(r'(`.+?)(<.+?>)(`__?)',  # reference with inline target
             # bygroups(String, String.Interpol, String)),
@@ -119,14 +128,14 @@ class MarkdownLexer(RegexLexer):
         ],
         state('literal'): [
             (r'[^`]+', String.Backtick),
-            (r'(?<!\\)``?' + end_string_suffix, String.Backtick, state('#pop')),
+            (r'(?<!\\)``?' + end_string_suffix, Markdown.Markup, state('#pop')),
         ],
         state('htmlblock'): [  # TODO: delegate to HTML lexer
             (r'^</[^>]+>\n', Markdown.HtmlBlock, state('#pop')),
             (r'.*\n', Markdown.HtmlBlock),  # slurp boring text
         ],
         state('codeblock'): [
-            (r'^```\n', Name.Builtin, state('#pop')),
+            (r'^```\n', Markdown.Markup, state('#pop')),
             (r'[^`]+', Markdown.CodeBlock),  # slurp boring text
             (r'`', Markdown.CodeBlock),  # allow single backticks
         ],
