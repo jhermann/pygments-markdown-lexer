@@ -15,6 +15,8 @@ Here's a short example:
 .. code-block:: markdown
 
     Enables _Pygments_ to handle
+    [Markdown](https://daringfireball.net/projects/markdown/syntax)
+    in *Sphinx* **code blocks**.
 
     ```
     Preformatted, GitHub style!
@@ -23,11 +25,6 @@ Here's a short example:
     ```sh
     echo "GitHub style with lexer"
     ```
-
-::
-
-    [Markdown](https://daringfireball.net/projects/markdown/syntax)
-    in *Sphinx* **code blocks**.
 
 See :doc:`markdown-syntax` for the full range of Markdown syntax elements.
 
