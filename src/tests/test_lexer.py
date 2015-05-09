@@ -22,7 +22,7 @@ import pygments
 #import pytest
 from pygments.token import *  # pylint: disable=unused-wildcard-import
 
-from pygments_markdown_lexer import lexer
+from pygments_markdown_lexer.lexer import Markdown, MarkdownLexer
 
 
 #############################################################################
@@ -30,7 +30,7 @@ from pygments_markdown_lexer import lexer
 
 def check(*expected):
     text = ''.join(i[1] for i in expected)
-    md_lexer = lexer.MarkdownLexer()
+    md_lexer = MarkdownLexer()
     md_lexer.add_filter('raiseonerror')
     md_lexer.add_filter('tokenmerge')
     result = list(pygments.lex(text, md_lexer))
@@ -41,7 +41,7 @@ def check(*expected):
 ### Basics
 
 def test_lexer_has_proper_name():
-    md_lexer = lexer.MarkdownLexer()
+    md_lexer = MarkdownLexer()
     assert md_lexer.name == 'Markdown'
     assert 'md' in md_lexer.aliases
     assert 'markdown' in md_lexer.aliases
@@ -55,20 +55,20 @@ def test_multiple_lines_of_text():
 ### Headings
 
 def test_headings_using_hashmarks():
-    check((Generic.Heading, '# Header level 1\n'),)
-    check((Generic.Heading, '# Header level 1 #\n'),)
+    check((Markdown.Heading, '# Header level 1\n'),)
+    check((Markdown.Heading, '# Header level 1 #\n'),)
     for i in range(2, 6):
-        check((Generic.SubHeading, '{hashes} H{n}\n'.format(n=i, hashes='#' * i)),)
-        check((Generic.SubHeading, '{hashes} H{n} {hashes}\n'.format(n=i, hashes='#' * i)),)
+        check((Markdown.SubHeading, '{hashes} H{n}\n'.format(n=i, hashes='#' * i)),)
+        check((Markdown.SubHeading, '{hashes} H{n} {hashes}\n'.format(n=i, hashes='#' * i)),)
 
 
 def test_headings_using_underlining():
     check(
-        (Generic.Heading, '======\nHeader\n======\n'),
+        (Markdown.Heading, '======\nHeader\n======\n'),
         (Text, 'text\n'),
     )
     check(
-        (Generic.SubHeading, '------\nSub Header\n------\n'),
+        (Markdown.SubHeading, '------\nSub Header\n------\n'),
         (Text, 'text\n'),
     )
     check((Text, '---- text ----\n'),)
@@ -94,9 +94,9 @@ def test_escape_by_backslash():
 def test_html_entities():
     check(
         (Text, 'Copyright symbol '),
-        (lexer.Markdown.HtmlEntity, '&copy;'),
+        (Markdown.HtmlEntity, '&copy;'),
         (Text, 'but AT&T vs. AT'),
-        (lexer.Markdown.HtmlEntity, '&amp;'),
+        (Markdown.HtmlEntity, '&amp;'),
         (Text, 'T and 4 < 5.\n'),
     )
     check(

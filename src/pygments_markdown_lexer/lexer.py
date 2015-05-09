@@ -32,6 +32,8 @@ from ._compat import encode_filename as state
 
 class Markdown(object):
     """Symbolic names for Markdown tokens."""
+    Heading = Generic.Heading
+    SubHeading = Generic.Heading
     CodeBlock = Comment.Preproc
     HtmlEntity = String.Symbol
 
@@ -58,12 +60,12 @@ class MarkdownLexer(RegexLexer):
     tokens = {
         state('root'): [
             # Headings (hashmarks)
-            (r'# .+( #)?\n', Generic.Heading),
-            (r'#{2,6} .+( #{2,6})?\n', Generic.SubHeading),
+            (r'# .+( #)?\n', Markdown.Heading),
+            (r'#{2,6} .+( #{2,6})?\n', Markdown.SubHeading),
 
             # Headings (underlined)
-            (r'(={3,}\n)?.{3,}\n={3,}\n', Generic.Heading),
-            (r'(-{3,}\n)?.{3,}\n-{3,}\n', Generic.SubHeading),
+            (r'(={3,}\n)?.{3,}\n={3,}\n', Markdown.Heading),
+            (r'(-{3,}\n)?.{3,}\n-{3,}\n', Markdown.SubHeading),
 
             # HTML one-liners
             (r'<(?P<tag>[-:a-zA-Z0-9]+)( [^>]+)>.+</(?P=tag)>\n', Comment.Single),
