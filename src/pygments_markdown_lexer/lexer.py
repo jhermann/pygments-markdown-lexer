@@ -35,6 +35,8 @@ class Markdown(object):
     Heading = Generic.Heading
     SubHeading = Generic.Heading
     CodeBlock = Comment.Preproc
+    HtmlSingle = Comment.Single
+    HtmlBlock = Comment.Special
     HtmlEntity = String.Symbol
 
 
@@ -68,10 +70,10 @@ class MarkdownLexer(RegexLexer):
             (r'(-{3,}\n)?.{3,}\n-{3,}\n', Markdown.SubHeading),
 
             # HTML one-liners
-            (r'<(?P<tag>[-:a-zA-Z0-9]+)( [^>]+)>.+</(?P=tag)>\n', Comment.Single),
+            (r'<(?P<tag>[-:a-zA-Z0-9]+)( [^>]+)>.+</(?P=tag)>\n', Markdown.HtmlSingle),
 
             # HTML blocks
-            (r'<[^/>][^>]*>\n', Comment.Special, state('htmlblock')),
+            (r'<[^/>][^>]*>\n', Markdown.HtmlBlock, state('htmlblock')),
 
             # GitHub style code blocks
             (r'(```)(.*?)(\n)',
@@ -119,9 +121,9 @@ class MarkdownLexer(RegexLexer):
             (r'[^`]+', String.Backtick),
             (r'(?<!\\)``?' + end_string_suffix, String.Backtick, state('#pop')),
         ],
-        state('htmlblock'): [
-            (r'</[^>]+>\n', Comment.Special, state('#pop')),
-            (r'.*\n', Comment.Special),  # slurp boring text
+        state('htmlblock'): [  # TODO: delegate to HTML lexer
+            (r'</[^>]+>\n', Markdown.HtmlBlock, state('#pop')),
+            (r'.*\n', Markdown.HtmlBlock),  # slurp boring text
         ],
         state('codeblock'): [
             (r'```\n', Name.Builtin, state('#pop')),
