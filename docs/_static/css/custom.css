@@ -1,0 +1,12 @@
+/* Custom styles */
+
+@import url("../alabaster.css");
+@import url("theme.css");
+
+code, .rst-content tt, .rst-content code {
+    font-size: 90%;
+}
+pre {
+    padding: .5rem;
+    background-color: #333;
+}

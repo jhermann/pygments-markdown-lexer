@@ -32,6 +32,11 @@ if not on_rtd and 0:
     # Add any paths that contain custom themes here, relative to this directory.
     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
+# The name of the Pygments (syntax highlighting) style to use.
+pygments_style = 'manni'
+pygments_style = 'native'
+
+html_style = 'css/custom.css'
 
 
 # -- General configuration ------------------------------------------------
@@ -109,9 +114,6 @@ exclude_patterns = ['_build']
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
 #show_authors = False
-
-# The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'manni'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
