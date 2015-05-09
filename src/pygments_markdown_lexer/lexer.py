@@ -92,8 +92,13 @@ class MarkdownLexer(RegexLexer):
             # Inline code
             (r'``?', String.Backtick, state('literal')),
 
-            # Emphasis (underscores)
-            (r'(?<!_)_[^_ \t].*?(?<!\\|_| |\t)_(?!_)', Generic.Emph),
+            # Emphasis
+            (r'_?_[ \n]', Text),  # whitespace escape
+            (r'\*?\*[ \n]', Text),  # whitespace escape
+            (r'\*\*.+?(?<![ \\])\*\*', Generic.Strong),
+            (r'__.+?(?<![ \\])__', Generic.Strong),
+            (r'\*.+?(?<![ \\])\*', Generic.Emph),
+            (r'_.+?(?<![ \\])_', Generic.Emph),
 
             #(r'(`.+?)(<.+?>)(`__?)',  # reference with inline target
             # bygroups(String, String.Interpol, String)),
@@ -102,16 +107,17 @@ class MarkdownLexer(RegexLexer):
             # bygroups(Name.Variable, Name.Attribute)),  # role
             #(r'(:[a-zA-Z0-9:-]+?:)(`.+?`)',
             # bygroups(Name.Attribute, Name.Variable)),  # role (content first)
-            #(r'\*\*.+?\*\*', Generic.Strong),  # Strong emphasis
-            #(r'\*.+?\*', Generic.Emph),  # Emphasis
             #(r'\[.*?\]_', String),  # Footnote or citation
             #(r'<.+?>', Name.Tag),   # Hyperlink
             #(r'[^\\\n\[*`:]+', Text),
-            (r'.', Text),
+
+            # Remaining text
+            (r'[a-zA-Z0-9]+', Text),  # optimize normal words a little
+            (r'.', Text),  # default fallback
         ],
         state('literal'): [
             (r'[^`]+', String.Backtick),
-            (r'``?' + end_string_suffix, String.Backtick, state('#pop')),
+            (r'(?<!\\)``?' + end_string_suffix, String.Backtick, state('#pop')),
         ],
         state('htmlblock'): [
             (r'</[^>]+>\n', Comment.Special, state('#pop')),

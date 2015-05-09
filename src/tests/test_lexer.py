@@ -106,14 +106,27 @@ def test_html_entities():
     )
 
 
-def test_emphasis_with_underscores():
-    check(
-        (Text, 'Lorem '),
-        (Generic.Emph, '_ipsum dolor_'),
-        (Text, ' sit amet.\n'),
+def test_emphasis_with_underscore_and_asterisk():
+    data = (
+        (Generic.Emph, '_'), (Generic.Emph, '*'),
+        (Generic.Strong, '__'), (Generic.Strong, '**'),
     )
-    check(
-        (Text, 'emphasized text '),
-        (Generic.Emph, r'_containing an underscore (\_)_'),
-        (Text, '.\n'),
-    )
+    for emph, ch in data:
+        check(
+            (Text, 'Lorem '),
+            (emph, '{ch}ipsum dolor{ch}'.format(ch=ch)),
+            (Text, ' sit amet\n'),
+        )
+        check(
+            (Text, 'emphasized text '),
+            (emph, r'{ch}containing escaped markup (\{one_ch}){ch}'.format(ch=ch, one_ch=ch[0])),
+            (Text, '.\n'),
+        )
+        check(
+            (Text, 'em'),
+            (emph, '{ch}bedd{ch}'.format(ch=ch)),
+            (Text, 'ed in words.\n'),
+        )
+        check(
+            (Text, 'isolated{ch} with {ch} spaces\n'.format(ch=ch)),
+        )
