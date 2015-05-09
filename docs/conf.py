@@ -22,8 +22,16 @@ import shlex
 #sys.path.insert(0, os.path.abspath('.'))
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-if not on_rtd:
+if not on_rtd and 0:
     import sphinx_rtd_theme
+
+    # The theme to use for HTML and HTML Help pages.  See the documentation for
+    # a list of builtin themes.
+    html_theme = 'sphinx_rtd_theme'
+
+    # Add any paths that contain custom themes here, relative to this directory.
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+
 
 
 # -- General configuration ------------------------------------------------
@@ -103,7 +111,7 @@ exclude_patterns = ['_build']
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'manni'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -116,14 +124,6 @@ todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
-if not on_rtd:
-    # The theme to use for HTML and HTML Help pages.  See the documentation for
-    # a list of builtin themes.
-    html_theme = 'sphinx_rtd_theme'
-
-    # Add any paths that contain custom themes here, relative to this directory.
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
