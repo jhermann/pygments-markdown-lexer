@@ -106,6 +106,15 @@ def test_headings_using_underlining():
 
 # TODO
 
+def test_html_comments():
+    check(
+        (Text, 'abc '),
+        (Markdown.Markup, '<!--'),
+        (Markdown.HtmlComment, 'HTML - comment'),
+        (Markdown.Markup, '-->'),
+        (Text, 'def\n'),
+    )
+
 
 #############################################################################
 ### Inline

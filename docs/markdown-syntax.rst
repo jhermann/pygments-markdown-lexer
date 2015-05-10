@@ -18,6 +18,13 @@ The following are some pygmentized examples from the
         <li><a href="/projects/markdown/" title="Markdown Project Page">Main</a></li>
     </ul>
 
+    HTML <!-- comment one-liner -->
+    HTML <!-- comment
+              on 2 lines -->
+    This --> not a comment
+
+.. code-block:: markdown
+
     *   [Overview](#overview)
         *   [Philosophy](#philosophy)
         *   [Inline HTML](#html)

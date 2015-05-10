@@ -37,7 +37,8 @@ class Markdown(object):
     SubHeading = Generic.Heading
     CodeBlock = Comment.Preproc
     HtmlSingle = Comment.Single
-    HtmlBlock = Comment.Special
+    HtmlBlock = Comment.Preproc
+    HtmlComment = Comment.MultiLine
     HtmlEntity = String.Symbol
 
 
@@ -76,6 +77,10 @@ class MarkdownLexer(RegexLexer):
 
             # HTML one-liners
             (r'^<(?P<tag>[-:a-zA-Z0-9]+)( [^>]+)>.+</(?P=tag)>\n', Markdown.HtmlSingle),
+
+            # HTML comments
+            (r'(<!--)((?:.*?\n?)*)(-->)',
+             bygroups(Markdown.Markup, Markdown.HtmlComment, Markdown.Markup)),
 
             # HTML blocks
             (r'^<[^/>][^>]*>\n', Markdown.HtmlBlock, state('htmlblock')),
