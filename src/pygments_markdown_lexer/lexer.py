@@ -75,6 +75,13 @@ class MarkdownLexer(RegexLexer):
             (r'^(-{3,}\n)?(\S.{2,}\n)(-{3,})(\n)',
              bygroups(Markdown.Markup, Markdown.Heading, Markdown.Markup, Text)),
 
+            # Blockquotes
+            (r'^\s*>\s', Markdown.Markup),
+
+            # Lists
+            (r'^\s*[-+*]\s', Markdown.Markup),
+            (r'^\s*[0-9]+\.\s', Markdown.Markup),
+
             # HTML one-liners
             (r'^<(?P<tag>[-:a-zA-Z0-9]+)( [^>]+)>.+</(?P=tag)>\n', Markdown.HtmlSingle),
 

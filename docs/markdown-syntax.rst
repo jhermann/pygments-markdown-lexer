@@ -109,38 +109,19 @@ The following are some pygmentized examples from the
     Normal text.
 
 
-
-
-
 .. code-block:: markdown
 
-
-    <h3 id="blockquote">Blockquotes</h3>
-
-    Markdown uses email-style `>` characters for blockquoting. If you're
-    familiar with quoting passages of text in an email message, then you
-    know how to create a blockquote in Markdown. It looks best if you hard
-    wrap the text and put a `>` before every line:
-
-        > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-        > consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-        > Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+        > This is a blockquote with two paragraphs. …
         >
         > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
         > id sem consectetuer libero luctus adipiscing.
 
-    Markdown allows you to be lazy and only put the `>` before the first
-    line of a hard-wrapped paragraph:
-
-        > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-        consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-        Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+        > This is a blockquote with only a leading indicator.
 
         > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
         id sem consectetuer libero luctus adipiscing.
 
-    Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by
-    adding additional levels of `>`:
+    Blockquotes can be nested.
 
         > This is the first level of quoting.
         >
@@ -151,264 +132,81 @@ The following are some pygmentized examples from the
     Blockquotes can contain other Markdown elements, including headers, lists,
     and code blocks:
 
-	    > ## This is a header.
-	    >
-	    > 1.   This is the first list item.
-	    > 2.   This is the second list item.
-	    >
-	    > Here's some example code:
-	    >
-	    >     return shell_exec("echo $input | $markdown_script");
+        > ## This is a header.
+        >
+        > 1.   This is the first list item.
+        > 2.   This is the second list item.
+        >
+        > Here's some example code:
+        >
+        >     return shell_exec("echo $input | $markdown_script");
 
-    Any decent text editor should make email-style quoting easy. For
-    example, with BBEdit, you can make a selection and choose Increase
-    Quote Level from the Text menu.
 
+.. code-block:: markdown
 
-    <h3 id="list">Lists</h3>
+    *   Red
+    *   Green
+    *   Blue
 
-    Markdown supports ordered (numbered) and unordered (bulleted) lists.
+    +   Red
+    +   Green
+    +   Blue
 
-    Unordered lists use asterisks, pluses, and hyphens -- interchangably
-    -- as list markers:
+    -   Red
+    -   Green
+    -   Blue
 
-        *   Red
-        *   Green
-        *   Blue
+    1.  Bird
+    2.  McHale
+    3.  Parish
 
-    is equivalent to:
+    *   A list item with a blockquote:
 
-        +   Red
-        +   Green
-        +   Blue
+        > This is a blockquote
+        > inside a list item.
 
-    and:
+    *   A list item with a code block:
 
-        -   Red
-        -   Green
-        -   Blue
+            <code goes here>
 
-    Ordered lists use numbers followed by periods:
+    1986\. What a great season.
 
-        1.  Bird
-        2.  McHale
-        3.  Parish
 
-    It's important to note that the actual numbers you use to mark the
-    list have no effect on the HTML output Markdown produces. The HTML
-    Markdown produces from the above list is:
+.. code-block:: markdown
 
-        <ol>
-        <li>Bird</li>
-        <li>McHale</li>
-        <li>Parish</li>
-        </ol>
+    This is a normal paragraph:
 
-    If you instead wrote the list in Markdown like this:
+        _This_ is a *code block*.
 
-        1.  Bird
-        1.  McHale
-        1.  Parish
+        * still code
+        > also code
 
-    or even:
-
-        3. Bird
-        1. McHale
-        8. Parish
-
-    you'd get the exact same HTML output. The point is, if you want to,
-    you can use ordinal numbers in your ordered Markdown lists, so that
-    the numbers in your source match the numbers in your published HTML.
-    But if you want to be lazy, you don't have to.
-
-    If you do use lazy list numbering, however, you should still start the
-    list with the number 1. At some point in the future, Markdown may support
-    starting ordered lists at an arbitrary number.
-
-    List markers typically start at the left margin, but may be indented by
-    up to three spaces. List markers must be followed by one or more spaces
-    or a tab.
-
-    To make lists look nice, you can wrap items with hanging indents:
-
-        *   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-            Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
-            viverra nec, fringilla in, laoreet vitae, risus.
-        *   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-            Suspendisse id sem consectetuer libero luctus adipiscing.
-
-    But if you want to be lazy, you don't have to:
-
-        *   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-        Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
-        viverra nec, fringilla in, laoreet vitae, risus.
-        *   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-        Suspendisse id sem consectetuer libero luctus adipiscing.
-
-    If list items are separated by blank lines, Markdown will wrap the
-    items in `<p>` tags in the HTML output. For example, this input:
-
-        *   Bird
-        *   Magic
-
-    will turn into:
-
-        <ul>
-        <li>Bird</li>
-        <li>Magic</li>
-        </ul>
-
-    But this:
-
-        *   Bird
-
-        *   Magic
-
-    will turn into:
-
-        <ul>
-        <li><p>Bird</p></li>
-        <li><p>Magic</p></li>
-        </ul>
-
-    List items may consist of multiple paragraphs. Each subsequent
-    paragraph in a list item must be indented by either 4 spaces
-    or one tab:
-
-        1.  This is a list item with two paragraphs. Lorem ipsum dolor
-            sit amet, consectetuer adipiscing elit. Aliquam hendrerit
-            mi posuere lectus.
-
-            Vestibulum enim wisi, viverra nec, fringilla in, laoreet
-            vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
-            sit amet velit.
-
-        2.  Suspendisse id sem consectetuer libero luctus adipiscing.
-
-    It looks nice if you indent every line of the subsequent
-    paragraphs, but here again, Markdown will allow you to be
-    lazy:
-
-        *   This is a list item with two paragraphs.
-
-            This is the second paragraph in the list item. You're
-        only required to indent the first line. Lorem ipsum dolor
-        sit amet, consectetuer adipiscing elit.
-
-        *   Another item in the same list.
-
-    To put a blockquote within a list item, the blockquote's `>`
-    delimiters need to be indented:
-
-        *   A list item with a blockquote:
-
-            > This is a blockquote
-            > inside a list item.
-
-    To put a code block within a list item, the code block needs
-    to be indented *twice* -- 8 spaces or two tabs:
-
-        *   A list item with a code block:
-
-                <code goes here>
-
-
-    It's worth noting that it's possible to trigger an ordered list by
-    accident, by writing something like this:
-
-        1986. What a great season.
-
-    In other words, a *number-period-space* sequence at the beginning of a
-    line. To avoid this, you can backslash-escape the period:
-
-        1986\. What a great season.
-
-
-
-    <h3 id="precode">Code Blocks</h3>
-
-    Pre-formatted code blocks are used for writing about programming or
-    markup source code. Rather than forming normal paragraphs, the lines
-    of a code block are interpreted literally. Markdown wraps a code block
-    in both `<pre>` and `<code>` tags.
-
-    To produce a code block in Markdown, simply indent every line of the
-    block by at least 4 spaces or 1 tab. For example, given this input:
-
-        This is a normal paragraph:
-
-            This is a code block.
-
-    Markdown will generate:
-
-        <p>This is a normal paragraph:</p>
-
-        <pre><code>This is a code block.
-        </code></pre>
-
-    One level of indentation -- 4 spaces or 1 tab -- is removed from each
-    line of the code block. For example, this:
-
-        Here is an example of AppleScript:
-
-            tell application "Foo"
-                beep
-            end tell
-
-    will turn into:
-
-        <p>Here is an example of AppleScript:</p>
-
-        <pre><code>tell application "Foo"
+        tell application "Foo"
             beep
         end tell
-        </code></pre>
 
-    A code block continues until it reaches a line that is not indented
-    (or the end of the article).
-
-    Within a code block, ampersands (`&`) and angle brackets (`<` and `>`)
-    are automatically converted into HTML entities. This makes it very
-    easy to include example HTML source code using Markdown -- just paste
-    it and indent it, and Markdown will handle the hassle of encoding the
-    ampersands and angle brackets. For example, this:
-
-            <div class="footer">
-                &copy; 2004 Foo Corporation
-            </div>
-
-    will turn into:
-
-        <pre><code>&lt;div class="footer"&gt;
-            &amp;copy; 2004 Foo Corporation
-        &lt;/div&gt;
-        </code></pre>
-
-    Regular Markdown syntax is not processed within code blocks. E.g.,
-    asterisks are just literal asterisks within a code block. This means
-    it's also easy to use Markdown to write about Markdown's own syntax.
+    Regular Markdown syntax is not processed within code blocks.
 
 
-
-    <h3 id="hr">Horizontal Rules</h3>
+.. code-block:: markdown
 
     You can produce a horizontal rule tag (`<hr />`) by placing three or
     more hyphens, asterisks, or underscores on a line by themselves. If you
     wish, you may use spaces between the hyphens or asterisks. Each of the
     following lines will produce a horizontal rule:
 
-        * * *
-
-        ***
-
-        *****
-
-        - - -
-
-        ---------------------------------------
-
-
     * * *
+
+    ***
+
+    *****
+
+    - - -
+
+    ---------------------------------------
+
+
+.. code-block:: markdown
 
     <h2 id="span">Span Elements</h2>
 
@@ -466,9 +264,9 @@ The following are some pygmentized examples from the
 
     The following three link definitions are equivalent:
 
-	    [foo]: http://example.com/  "Optional Title Here"
-	    [foo]: http://example.com/  'Optional Title Here'
-	    [foo]: http://example.com/  (Optional Title Here)
+        [foo]: http://example.com/  "Optional Title Here"
+        [foo]: http://example.com/  'Optional Title Here'
+        [foo]: http://example.com/  (Optional Title Here)
 
     **Note:** There is a known bug in Markdown.pl 1.0.1 which prevents
     single quotes from being used to delimit link titles.
@@ -490,8 +288,8 @@ The following are some pygmentized examples from the
     punctuation -- but they are *not* case sensitive. E.g. these two
     links:
 
-	    [link text][a]
-	    [link text][A]
+        [link text][a]
+        [link text][A]
 
     are equivalent.
 
@@ -500,20 +298,20 @@ The following are some pygmentized examples from the
     Just use an empty set of square brackets -- e.g., to link the word
     "Google" to the google.com web site, you could simply write:
 
-	    [Google][]
+        [Google][]
 
     And then define the link:
 
-	    [Google]: http://google.com/
+        [Google]: http://google.com/
 
     Because link names may contain spaces, this shortcut even works for
     multiple words in the link text:
 
-	    Visit [Daring Fireball][] for more information.
+        Visit [Daring Fireball][] for more information.
 
     And then define the link:
 
-	    [Daring Fireball]: http://daringfireball.net/
+        [Daring Fireball]: http://daringfireball.net/
 
     Link definitions can be placed anywhere in your Markdown document. I
     tend to put them immediately after each paragraph in which they're
@@ -635,15 +433,15 @@ The following are some pygmentized examples from the
     one after the opening, one before the closing. This allows you to place
     literal backtick characters at the beginning or end of a code span:
 
-	    A single backtick in a code span: `` ` ``
+        A single backtick in a code span: `` ` ``
 
-	    A backtick-delimited string in a code span: `` `foo` ``
+        A backtick-delimited string in a code span: `` `foo` ``
 
     will produce:
 
-	    <p>A single backtick in a code span: <code>`</code></p>
+        <p>A single backtick in a code span: <code>`</code></p>
 
-	    <p>A backtick-delimited string in a code span: <code>`foo`</code></p>
+        <p>A backtick-delimited string in a code span: <code>`foo`</code></p>
 
     With a code span, ampersands and angle brackets are encoded as HTML
     entities automatically, which makes it easy to include example HTML
@@ -761,7 +559,7 @@ The following are some pygmentized examples from the
         []  square brackets
         ()  parentheses
         #   hash mark
-	    +	plus sign
-	    -	minus sign (hyphen)
+        +    plus sign
+        -    minus sign (hyphen)
         .   dot
         !   exclamation mark

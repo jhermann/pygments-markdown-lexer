@@ -177,3 +177,22 @@ def test_emphasis_with_underscore_and_asterisk():
         check(
             (Text, 'isolated{ch} with {ch} spaces\n'.format(ch=ch)),
         )
+
+
+def test_lists_and_blockquotes():
+    for lead in ('*', '+', '-', '1.', '21.', '>'):
+        check(
+            (Text, lead + 'Lorem ipsum.\n'),
+        )
+        check(
+            (Markdown.Markup, lead + ' '),
+            (Text, 'Lorem ipsum.\n'),
+        )
+        check(
+            (Markdown.Markup, ' ' + lead + ' '),
+            (Text, 'Lorem ipsum.\n'),
+        )
+        check(
+            (Markdown.Markup, '\t' + lead + ' '),
+            (Text, 'Lorem ipsum.\n'),
+        )
