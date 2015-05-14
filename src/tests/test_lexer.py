@@ -117,6 +117,39 @@ def test_html_comments():
 
 
 #############################################################################
+### Other block / line elements
+
+def test_horizontal_rules():
+    check(
+        (Text, 'abc\n\n_ _\n'),
+    )
+    check(
+        (Text, 'abc\n'),
+        (Markdown.Markup, '\n* '),
+        (Text, '*\n'),
+    )
+    check(
+        (Text, 'abc\n'),
+        (Markdown.Markup, '\n- '),
+        (Text, '-\n'),
+    )
+    for ch in '-*_':
+        ch3 = ch * 3
+        check((Text, 'abc {c} {c} {c} def\n'.format(c=ch)),)
+        check((Text, ch + ch + '\n'),)
+        check(
+            (Text, 'abc\n'),
+            (Markdown.Markup, '\n' + ch3 + '\n'),
+            (Text, 'def\n'),
+        )
+        check(
+            (Text, 'abc\n'),
+            (Markdown.Markup, '\n{c} {c} {c}\n'.format(c=ch)),
+            (Text, 'def\n'),
+        )
+
+
+#############################################################################
 ### Inline
 
 def test_escape_by_backslash():

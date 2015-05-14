@@ -63,6 +63,9 @@ class MarkdownLexer(RegexLexer):
 
     tokens = {
         state('root'): [
+            # Horizontal rule
+            (r'^\s*\n(?:\s*[-*_]){3,}\s*\n', Markdown.Markup),
+
             # Headings (hashmarks)
             (r'^(# )(.+?)( #)?(\n)',
              bygroups(Markdown.Markup, Markdown.Heading, Markdown.Markup, Text)),
