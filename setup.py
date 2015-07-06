@@ -43,6 +43,7 @@ entry_points = {
 
 # ~~~ BEGIN springerle/py-generic-project ~~~
 # Stdlib imports
+import io
 import os
 import re
 import sys
@@ -78,6 +79,9 @@ class PyTest(TestCommand):
         self.test_suite = True
 
     def run_tests(self):
+        if 0 and os.environ.get('DH_VIRTUALENV_INSTALL_ROOT', None):
+            return  # disable tests during dh-virtualenv build
+
         # import locally, cause outside the eggs aren't loaded
         import pytest
         errno = pytest.main(self.pytest_args)
@@ -89,7 +93,7 @@ def _build_metadata(): # pylint: disable=too-many-locals, too-many-branches
     # Handle metadata in package source
     expected_keys = ('url', 'version', 'license', 'author', 'author_email', 'long_description', 'keywords')
     metadata = {}
-    with open(srcfile('src', package_name, '__init__.py'), encoding='utf-8') as handle:
+    with io.open(srcfile('src', package_name, '__init__.py'), encoding='utf-8') as handle:
         pkg_init = handle.read()
         # Get default long description from docstring
         metadata['long_description'] = re.search(r'^"""(.+?)^"""$', pkg_init, re.DOTALL|re.MULTILINE).group(1)
@@ -119,7 +123,7 @@ def _build_metadata(): # pylint: disable=too-many-locals, too-many-branches
     for key, filename in requirements_files.items():
         requires[key] = []
         if os.path.exists(srcfile(filename)):
-            with open(srcfile(filename), encoding='utf-8') as handle:
+            with io.open(srcfile(filename), encoding='utf-8') as handle:
                 for line in handle:
                     line = line.strip()
                     if line and not line.startswith('#'):
@@ -136,7 +140,7 @@ def _build_metadata(): # pylint: disable=too-many-locals, too-many-branches
         if '__main__.py' in files:
             path = path[len(srcfile('src') + os.sep):]
             appname = path.split(os.sep)[-1]
-            with open(srcfile('src', path, '__main__.py'), encoding='utf-8') as handle:
+            with io.open(srcfile('src', path, '__main__.py'), encoding='utf-8') as handle:
                 for line in handle.readlines():
                     match = re.match(r"""^__app_name__ += (?P<q>['"])(.+?)(?P=q)$""", line)
                     if match:
@@ -159,7 +163,7 @@ def _build_metadata(): # pylint: disable=too-many-locals, too-many-branches
     for classifiers_txt in ('classifiers.txt', 'project.d/classifiers.txt'):
         classifiers_txt = srcfile(classifiers_txt)
         if os.path.exists(classifiers_txt):
-            with open(classifiers_txt, encoding='utf-8') as handle:
+            with io.open(classifiers_txt, encoding='utf-8') as handle:
                 classifiers = [i.strip() for i in handle if i.strip() and not i.startswith('#')]
             break
     entry_points.setdefault('console_scripts', []).extend(console_scripts)
@@ -186,7 +190,7 @@ def _build_metadata(): # pylint: disable=too-many-locals, too-many-branches
 project = _build_metadata()
 __all__ = ['project', 'project_root', 'package_name', 'srcfile']
 if __name__ == '__main__':
-    if '--metadata' == sys.argv[1]:
+    if '--metadata' in sys.argv[:2]:
         import json
         json.dump(project, sys.stdout, default=repr, indent=4, sort_keys=True)
         sys.stdout.write('\n')
