@@ -21,6 +21,8 @@
 """
 from __future__ import absolute_import, unicode_literals, print_function
 
+from .lexer import MarkdownLexer
+
 __url__             = "https://github.com/jhermann/pygments-markdown-lexer"
 __version__         = "0.1.0"
 __license__         = "Apache 2.0"
@@ -28,4 +30,4 @@ __author__          = "Jürgen Hermann"
 __author_email__    = "jh@web.de"
 __keywords__        = "hosted.by.github pygments markdown lexer highlighting"
 
-__all__ = []
+__all__ = ['MarkdownLexer']
