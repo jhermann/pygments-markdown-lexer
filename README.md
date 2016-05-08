@@ -79,10 +79,10 @@ See [CONTRIBUTING](https://github.com/jhermann/pygments-markdown-lexer/blob/mast
 
 * [Sphinx](http://sphinx-doc.org/)
 * [Pygments](http://pygments.org/)
-* [Cookiecutter](http://cookiecutter.readthedocs.org/en/latest/)
+* [Cookiecutter](http://cookiecutter.readthedocs.io/en/latest/)
 * [PyInvoke](http://www.pyinvoke.org/)
 * [pytest](http://pytest.org/latest/contents.html)
-* [tox](https://tox.readthedocs.org/en/latest/)
+* [tox](https://tox.readthedocs.io/en/latest/)
 * [Pylint](http://docs.pylint.org/)
 * [twine](https://github.com/pypa/twine#twine)
 * [bpython](http://docs.bpython-interpreter.org/)
