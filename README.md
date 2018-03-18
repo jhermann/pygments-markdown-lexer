@@ -9,8 +9,6 @@ for [Pygments](http://pygments.org/) to highlight Markdown code snippets.
  [![License](https://img.shields.io/pypi/l/pygments-markdown-lexer.svg)](https://github.com/jhermann/pygments-markdown-lexer/blob/master/LICENSE)
  [![Development Status](https://img.shields.io/pypi/status/pygments-markdown-lexer.svg)](https://pypi.python.org/pypi/pygments-markdown-lexer/)
  [![Latest Version](https://img.shields.io/pypi/v/pygments-markdown-lexer.svg)](https://pypi.python.org/pypi/pygments-markdown-lexer/)
- [![Download format](https://img.shields.io/pypi/format/pygments-markdown-lexer.svg)](https://pypi.python.org/pypi/pygments-markdown-lexer/)
- [![Downloads](https://img.shields.io/pypi/dw/pygments-markdown-lexer.svg)](https://pypi.python.org/pypi/pygments-markdown-lexer/)
 
 
 ## Installation
