@@ -229,3 +229,11 @@ def test_lists_and_blockquotes():
             (Markdown.Markup, '\t' + lead + ' '),
             (Text, 'Lorem ipsum.\n'),
         )
+
+def test_inline_code():
+    check(
+        (Markdown.Markup, r'``'),
+        (Markdown.InlineCode, 'There is a literal backtick (`) here.'),
+        (Markdown.Markup, r'``'),
+        (Text, '\n'),
+    )

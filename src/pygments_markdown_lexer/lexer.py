@@ -35,6 +35,7 @@ class Markdown(object):
     Markup = Keyword
     Heading = Generic.Heading
     SubHeading = Generic.Heading
+    InlineCode = Token.Literal.String.Backtick
     CodeBlock = Comment.Preproc
     HtmlSingle = Comment.Single
     HtmlBlock = Comment.Preproc
@@ -112,7 +113,8 @@ class MarkdownLexer(RegexLexer):
             (r'&', Text),
 
             # Inline code
-            (r'``?', Markdown.Markup, state('literal')),
+            (r'(`+) ?(.*?) ?(\1)',
+             bygroups(Markdown.Markup, Markdown.InlineCode, Markdown.Markup)),
 
             # Emphasis
             (r'_?_[ \n]', Text),  # whitespace escape
@@ -140,10 +142,6 @@ class MarkdownLexer(RegexLexer):
             # Remaining text
             (r'[a-zA-Z0-9]+', Text),  # optimize normal words a little
             (r'.', Text),  # default fallback
-        ],
-        state('literal'): [
-            (r'[^`]+', String.Backtick),
-            (r'(?<!\\)``?' + end_string_suffix, Markdown.Markup, state('#pop')),
         ],
         state('htmlblock'): [  # TODO: delegate to HTML lexer
             (r'^</[^>]+>\n', Markdown.HtmlBlock, state('#pop')),
